@@ -1,18 +1,18 @@
 # Takes a network prefix and your DNS server of choice as parameters
-param ($NetworkPrefix, $DnsServer)
+param ($network, $server)
 
 # Check if chosen DNS server is online
-if (-not (Test-Connection -ComputerName $DnsServer -Count 1 -Quiet)) {
-    Write-Host "($DnsServer) is not reachable"
+if (-not (Test-Connection -ComputerName $server -Count 1 -Quiet)) {
+    Write-Host "($server) is not reachable"
     Exit
 }
 
 # Make a list of IP addresses based on network prefix
-$ipRange = 0..255 | ForEach-Object {
-    "$NetworkPrefix.$_"
+$ip = 0..255 | ForEach-Object {
+    "$network.$_"
 }
 
 # Resolves DNS names
-$ipRange | ForEach-Object {
-    Resolve-DnsName -Name $_ -Server $DnsServer -ErrorAction Ignore
+$ip | ForEach-Object {
+    Resolve-DnsName -Name $_ -Server $server -ErrorAction Ignore
 }
