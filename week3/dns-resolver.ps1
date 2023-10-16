@@ -1,8 +1,5 @@
 # Takes a network prefix and your DNS server of choice as parameters
-param (
-    [string]$NetworkPrefix,
-    [string]$DnsServer
-)
+param ($NetworkPrefix, $DnsServer)
 
 # Check if chosen DNS server is online
 if (-not (Test-Connection -ComputerName $DnsServer -Count 1 -Quiet)) {
